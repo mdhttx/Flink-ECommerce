@@ -21,14 +21,17 @@ package FlinkCommerce;
 import Deserializer.JSONValueDeserializationSchema;
 import Dto.Transaction;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.connector.jdbc.JdbcConnectionOptions;
+import org.apache.flink.connector.jdbc.JdbcExecutionOptions;
+import org.apache.flink.connector.jdbc.JdbcStatementBuilder;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-
+import org.apache.flink.connector.jdbc.JdbcSink;
 
 public class DataStreamJob {
-
+    private static final String jdbcUrl = "jdbc:postgresql://localhost:5432/postgres"
 	public static void main(String[] args) throws Exception {
 		// Sets up the execution environment, which is the main entry point
 		// to building Flink applications.
@@ -49,6 +52,37 @@ public class DataStreamJob {
 
         transactionStream.print();
 
+        JdbcExecutionOptions execOptions = new JdbcExecutionOptions.Builder().withBatchSize(1000)
+                .withBatchIntervalMs(200)
+                .withMaxRetries(5)
+                .build();
+
+        JdbcConnectionOptions connOptions = new JdbcConnectionOptions.JdbcConnectionOptionsBuilder()
+                .withUrl(jdbcUrl)
+                .withDriverName("org.postgresql.Driver")
+                .withUsername(username)
+                .withPassword(password)
+                .build();
+        //create transaction table
+        transactionStream.addSink(JdbcSink.sink(
+                //sql,
+                (JdbcStatementBuilder<Transaction>)(preparedStatement,transaction) ->{
+
+                },
+                execOptions,
+
+        ));
+
 		env.execute("Flink Java API Skeleton");
 	}
 }
+
+
+
+
+
+
+
+
+
+
