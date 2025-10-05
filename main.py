@@ -43,7 +43,7 @@ def main():
     while (datetime.now() - curr_time).seconds < 120 :
         try :    
             transaction = generate_sales_transactions()
-            transaction['total_amount'] = transaction['productPrice'] * transaction['productQuantity']
+            transaction['totalAmount'] = transaction['productPrice'] * transaction['productQuantity']
 
             print(transaction)
 

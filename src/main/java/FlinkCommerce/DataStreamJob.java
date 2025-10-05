@@ -24,16 +24,23 @@ import Dto.SalesPerDay;
 import Dto.SalesPerMonth;
 import Dto.Transaction;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.connector.elasticsearch.sink.Elasticsearch7SinkBuilder;
 import org.apache.flink.connector.jdbc.JdbcConnectionOptions;
 import org.apache.flink.connector.jdbc.JdbcExecutionOptions;
 import org.apache.flink.connector.jdbc.JdbcStatementBuilder;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
+import org.apache.flink.elasticsearch7.shaded.org.apache.http.HttpHost;
+import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.action.index.IndexRequest;
+import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.client.Requests;
+import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.common.xcontent.XContentType;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.connector.jdbc.JdbcSink;
 
 import java.sql.Date;
+
+import static utils.JsonUtil.convertTransactionToJson;
 
 public class DataStreamJob {
     private static final String jdbcUrl = "jdbc:postgresql://localhost:6543/postgres";
@@ -72,6 +79,29 @@ public class DataStreamJob {
                 .withUsername(username)
                 .withPassword(password)
                 .build();
+
+        //create transactions table
+        transactionStream.addSink(JdbcSink.sink(
+                "CREATE TABLE IF NOT EXISTS transactions (" +
+                        "transaction_id VARCHAR(255) PRIMARY KEY, " +
+                        "product_id VARCHAR(255), " +
+                        "product_name VARCHAR(255), " +
+                        "product_category VARCHAR(255), " +
+                        "product_price DOUBLE PRECISION, " +
+                        "product_quantity INTEGER, " +
+                        "product_brand VARCHAR(255), " +
+                        "total_amount DOUBLE PRECISION, " +
+                        "currency VARCHAR(255), " +
+                        "customer_id VARCHAR(255), " +
+                        "transaction_date TIMESTAMP, " +
+                        "payment_method VARCHAR(255) " +
+                        ")",
+                (JdbcStatementBuilder<Transaction>) (preparedStatement, transaction) -> {
+
+                },
+                execOptions,
+                connOptions
+        )).name("Create Transactions Table Sink");
 
         //create sales_per_category table sink
         transactionStream.addSink(JdbcSink.sink(
@@ -233,8 +263,25 @@ public class DataStreamJob {
                         connOptions
                 )).name("Insert into sales per month table");
 
+       transactionStream.sinkTo(
+                new Elasticsearch7SinkBuilder<Transaction>()
+                        .setHosts(new HttpHost("localhost" , 9200 ,"http"))
+                        .setBulkFlushInterval(10000) //ref
+                        .setEmitter((transaction, runtimeContext, requestIndexer) -> {
+                            String json = convertTransactionToJson(transaction);
+
+                            IndexRequest indexRequest = Requests.indexRequest()
+                                    .index("transactions")
+                                    .id(transaction.getTransactionId())
+                                    .source(json, XContentType.JSON);
+                            requestIndexer.add(indexRequest);
+                        }).build()
+        ).name("Elasticsearch");
 
 
+
+
+            //Execute flink program, computation begins
 		env.execute("Flink Ecommerce Realtime Streaming");
 	}
 }
