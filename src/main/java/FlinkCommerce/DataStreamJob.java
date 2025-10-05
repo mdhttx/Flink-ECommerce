@@ -37,7 +37,6 @@ import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.common.xcontent.
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.connector.jdbc.JdbcSink;
-
 import java.sql.Date;
 
 import static utils.JsonUtil.convertTransactionToJson;
@@ -55,6 +54,7 @@ public class DataStreamJob {
         String topic = "financial_transactions";
 
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.enableCheckpointing(5000);
 
         KafkaSource<Transaction> source = KafkaSource.<Transaction>builder()
                 .setBootstrapServers("localhost:9092")
