@@ -19,8 +19,8 @@ public class Transaction {
     private String customerId;
     private Timestamp transactionDate;
     private String paymentMethod;
-/*
-    // Getters
+
+   /* // Getters
     public String getTransactionId() {
         return transactionId;
     }
