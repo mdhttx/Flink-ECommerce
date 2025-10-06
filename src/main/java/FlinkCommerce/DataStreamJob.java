@@ -54,7 +54,7 @@ public class DataStreamJob {
         String topic = "financial_transactions";
 
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.enableCheckpointing(5000);
+        //env.enableCheckpointing(5000);
 
         KafkaSource<Transaction> source = KafkaSource.<Transaction>builder()
                 .setBootstrapServers("localhost:9092")
