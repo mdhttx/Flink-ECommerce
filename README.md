@@ -252,7 +252,8 @@ You should see a portion of your transaction data indexed in Elasticsearch.
 Then go to:  
 **Analytics → Dashboard**  
 and start building your visualizations! 🎨
-<img width="1530" height="740" alt="image" src="https://github.com/user-attachments/assets/7d62ecf1-9bf9-4f7b-99f9-23bd64a37bba" />
+<img width="1842" height="876" alt="Screenshot 2025-10-07 134629" src="https://github.com/user-attachments/assets/32b334da-37e4-4e7f-a954-ef46a1f5b98c" />
+
 
 
 ---
