@@ -201,7 +201,7 @@ List all created tables:
 ```sql
 \d
 ```
-![List Of Relations](image-1.png)
+![alt text](image-2.png)
 
 Check data in one of the aggregated tables:
 
