@@ -1,11 +1,11 @@
-# 🚀 Flink E-Commerce Real-Time Streaming Pipeline
+#  Flink E-Commerce Real-Time Streaming Pipeline
 
 This repository contains an **E-Commerce real-time streaming pipeline** built using **Apache Flink**, **Kafka**, **PostgreSQL**, and **Elasticsearch**, with **Kibana** for live data visualization.  
 The project demonstrates **real-time stream processing**, **data aggregation**, and **multi-sink storage** (PostgreSQL and Elasticsearch).
 
 ---
 
-## 🧩 Components
+##  Components
 
 - **Apache Flink** — for stream processing and aggregations.  
 - **Kafka** — message broker for real-time event streaming.  
@@ -55,7 +55,7 @@ Flink-ECommerce/
 
 ---
 
-## ⚙️ Flink Configuration Overview
+##  Flink Configuration Overview
 
 - **Kafka Source**:  
   - Reads real-time transaction data from the Kafka topic.
@@ -86,7 +86,7 @@ Flink-ECommerce/
 
 ---
 
-## 🧱 Setting Up the Environment
+##  Setting Up the Environment
 
 ### 1️⃣ Install Apache Flink (v1.18.0)
 
