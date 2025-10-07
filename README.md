@@ -201,6 +201,7 @@ List all created tables:
 ```sql
 \d
 ```
+<img width="500" height="379" alt="image" src="https://github.com/user-attachments/assets/4e9dd35a-e715-49f0-8f62-a12ccd8f4f41" />
 
 Check data in one of the aggregated tables:
 
