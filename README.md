@@ -175,7 +175,10 @@ python main.py
 ---
 
 ### 5️⃣ Run the Flink Streaming Job
-
+Build the job using:
+```bash
+mvn clean & mvn package
+```
 Make sure you’re in the directory containing the compiled JAR file (`target/FlinkCommerce-1.0-SNAPSHOT.jar`).
 
 Run the job using:
