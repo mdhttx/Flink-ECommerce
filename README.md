@@ -201,7 +201,6 @@ List all created tables:
 ```sql
 \d
 ```
-![alt text](image-2.png)
 
 Check data in one of the aggregated tables:
 
