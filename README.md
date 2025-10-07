@@ -37,7 +37,7 @@ Flink_E-commerce/
 
 ---
 
-## ⚙️ Configuration Overview
+## ⚙️ Flink Configuration Overview
 
 - **Kafka Source**:  
   - Reads real-time transaction data from the Kafka topic.
@@ -64,8 +64,7 @@ Flink_E-commerce/
   - **PostgreSQL Sink (via JDBC)** — for structured data analysis and reporting.
   - **Elasticsearch Sink** — for real-time search and visualization in Kibana.
 
-> 🧠 **Why use both PostgreSQL and Elasticsearch?**  
-> PostgreSQL is used for structured storage and SQL-based analytics, while Elasticsearch is optimized for fast searching, filtering, and real-time visual dashboards in Kibana.
+
 
 ---
 
@@ -202,6 +201,7 @@ List all created tables:
 ```sql
 \d
 ```
+![List Of Relations](image-1.png)
 
 Check data in one of the aggregated tables:
 
