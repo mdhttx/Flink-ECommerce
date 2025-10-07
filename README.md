@@ -20,20 +20,38 @@ The project demonstrates **real-time stream processing**, **data aggregation**, 
 ## 🗂️ Code Structure
 
 ```
-Flink_E-commerce/
+Flink-ECommerce/
 │
-├── src/
-│   └── main/java/FlinkCommerce/
-│       ├── DataStreamJob.java        # Main Flink application logic
-│       ├── deserializer/             # Deserialization logic for Kafka messages
-│       ├── dto/                      # Data Transfer Object (DTO) classes
-│       └── utils/                    # Utility and JSON conversion classes
+├── .gitignore                      # Files and folders ignored by Git (e.g., target/, logs/)
+├── docker-compose.yml              # Defines and orchestrates all required services (Kafka, Zookeeper, Flink, etc.)
+├── pom.xml                         # Maven build configuration file (manages dependencies and plugins)
+├── README.md                       # Project documentation
+├── requirements.txt                 # Python dependencies for the data producer script
 │
-├── docker-compose.yml                # Defines services: Postgres, Kafka, Elasticsearch, Kibana
-├── requirements.txt                  # Python dependencies for Kafka producer
-├── main.py                           # Kafka producer for sending E-commerce data
-└── target/FlinkCommerce-1.0-SNAPSHOT.jar  # Compiled Flink job JAR
+├── Producer_Script/                # Folder containing the Python producer component
+│   └── main.py                     # Python script that generates mock e-commerce data and sends it to Kafka
+│
+└── src/
+    └── main/
+        └── java/
+            └── FlinkCommerce/
+                ├── DataStreamJob.java               # Main Flink streaming job; defines data sources, transformations, and sinks
+                │
+                ├── deserializer/                    # Handles parsing of JSON messages from Kafka into Java objects
+                │   └── JSONValueDeserializationSchema.java   # Custom JSON deserializer used by Flink to decode Kafka events
+                │
+                ├── dto/                             # Data Transfer Objects (POJOs) representing events and aggregation results
+                │   ├── Transaction.java              # Represents individual transaction events
+                │   ├── SalesPerCategory.java         # Represents aggregated sales by category
+                │   ├── SalesPerDevice.java           # Represents aggregated sales by device type
+                │   ├── OrderStatusMetrics.java       # Represents order-level status metrics
+                │   └── ... (other DTO classes)       # Additional POJOs for other metrics (shipping, discount analysis, etc.)
+                │
+                └── utils/                            # Helper utilities
+                    └── JsonUtil.java                 # Provides JSON serialization/deserialization methods
 ```
+
+---
 
 ---
 
