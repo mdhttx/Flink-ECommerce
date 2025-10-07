@@ -208,6 +208,7 @@ Check data in one of the aggregated tables:
 ```sql
 SELECT * FROM shipping_analysis;
 ```
+<img width="734" height="311" alt="image" src="https://github.com/user-attachments/assets/3ffc64be-6a6a-46b4-96f4-8c3fc7d67079" />
 
 ---
 
