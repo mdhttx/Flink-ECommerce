@@ -4,7 +4,10 @@ This repository contains an **E-Commerce real-time streaming pipeline** built us
 The project demonstrates **real-time stream processing**, **data aggregation**, and **multi-sink storage** (PostgreSQL and Elasticsearch).
 
 ---
+## System Architecture 
+![1759834952761](https://github.com/user-attachments/assets/32f17b8e-9438-44f5-97fd-11028ca1ade0)
 
+---
 ##  Components
 
 - **Apache Flink** — for stream processing and aggregations.  
